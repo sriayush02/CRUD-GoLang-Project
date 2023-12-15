@@ -16,36 +16,31 @@ func main() {
 	// initialise gofr object
 	app := gofr.New()
 
-	app.GET("/greet", greet)
+	app.POST("/cart/add/{name}/{amount}", CreateCart)
 
-	app.POST("/cart/add/{name}/{amount}", createcart)
+	app.GET("/cart/view", ViewCart)
 
-	app.GET("/cart/view", viewcart)
+	app.DELETE("/cart/delete/{id}", DeleteProduct)
 
-	app.DELETE("/cart/delete/{id}", deleteproduct)
-
-	app.PUT("/cart/update/{id}", updatecart)
+	app.PUT("/cart/update/{id}", UpdateCart)
 
 	// Starts the server, it will listen on the default port 8000.
 	// it can be over-ridden through configs
 	app.Start()
 }
-func greet(ctx *gofr.Context) (interface{}, error) {
-	// Get the value using the redis instance
-	value, err := ctx.Redis.Get(ctx.Context, "greeting").Result()
-
-	return value, err
-}
-func createcart(ctx *gofr.Context) (interface{}, error) {
+func CreateCart(ctx *gofr.Context) (interface{}, error) {
 	name := ctx.PathParam("name")
 	amount := ctx.PathParam("amount")
 
 	// Inserting a customer row in database using SQL
 	_, err := ctx.DB().ExecContext(ctx, "INSERT INTO carts (name, amount) VALUES (?, ?)", name, amount)
+	if err != nil {
+		return nil, err
+	}
+	return map[string]string{"err": "Created Successfully"}, nil
 
-	return nil, err
 }
-func viewcart(ctx *gofr.Context) (interface{}, error) {
+func ViewCart(ctx *gofr.Context) (interface{}, error) {
 	var carts []Cart
 
 	// Getting the customer from the database using SQL
@@ -67,16 +62,18 @@ func viewcart(ctx *gofr.Context) (interface{}, error) {
 	return carts, nil
 }
 
-func deleteproduct(ctx *gofr.Context) (interface{}, error) {
+func DeleteProduct(ctx *gofr.Context) (interface{}, error) {
 	id := ctx.PathParam("id")
 
 	// Inserting a customer row in database using SQL
 	_, err := ctx.DB().ExecContext(ctx, "DELETE FROM carts WHERE id =?", id)
-
-	return nil, err
+	if err != nil {
+		return nil, err
+	}
+	return map[string]string{"err": "Deleted Successfully"}, nil
 
 }
-func updatecart(ctx *gofr.Context) (interface{}, error) {
+func UpdateCart(ctx *gofr.Context) (interface{}, error) {
 	id := ctx.PathParam("id")
 	var newcart struct {
 		PName   string  `json:"name"`
@@ -91,7 +88,9 @@ func updatecart(ctx *gofr.Context) (interface{}, error) {
 
 	// Inserting a customer row in database using SQL
 	_, err := ctx.DB().ExecContext(ctx, "UPDATE carts SET name = ?, amount = ? WHERE id = ?", newcart.PName, newcart.PAmount, id)
-
-	return nil, err
+	if err != nil {
+		return nil, err
+	}
+	return map[string]string{"err": "Updated Successfully"}, nil
 
 }
