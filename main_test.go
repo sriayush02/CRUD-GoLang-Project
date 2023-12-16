@@ -54,14 +54,14 @@ func TestDeleteProduct(t *testing.T) {
 }
 
 func TestUpdateCart(t *testing.T) {
-	// Start the main application (assuming your main function handles server initialization)
+	
 	go main()
 
-	// Test data
+	
 	testProductName := "Pant"
 	testAmount := 399.99
 
-	// Create request body
+	
 	reqBody := map[string]interface{}{"name": testProductName, "amount": testAmount}
 	body, _ := json.Marshal(reqBody)
 
@@ -71,13 +71,13 @@ func TestUpdateCart(t *testing.T) {
 		t.Fatal("Failed to create request:", err)
 	}
 
-	// Perform request
+	
 	client := http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		t.Fatal("Could not get response:", err)
 	}
 
-	// Assert the status code
+	
 	assert.Equal(t, http.StatusOK, resp.StatusCode, "Expected status code 200")
 }
