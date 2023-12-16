@@ -54,108 +54,30 @@ func TestDeleteProduct(t *testing.T) {
 }
 
 func TestUpdateCart(t *testing.T) {
+	// Start the main application (assuming your main function handles server initialization)
 	go main()
-	testProductname := "Pant"
-	testAmount := "399.99"
-	reqBody := map[string]interface{}{"name": testProductname, "amount": testAmount}
+
+	// Test data
+	testProductName := "Pant"
+	testAmount := 399.99
+
+	// Create request body
+	reqBody := map[string]interface{}{"name": testProductName, "amount": testAmount}
 	body, _ := json.Marshal(reqBody)
 
-	req, _ := http.NewRequest("PUT", "http://localhost:9000/cart/update/4", bytes.NewBuffer(body))
-	c := http.Client{}
-
-	resp, err := c.Do(req)
+	// Create and send PUT request
+	req, err := http.NewRequest("PUT", "http://localhost:9000/cart/update/4", bytes.NewBuffer(body))
 	if err != nil {
-		t.Error("Could not get response", err)
+		t.Fatal("Failed to create request:", err)
 	}
 
+	// Perform request
+	client := http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatal("Could not get response:", err)
+	}
+
+	// Assert the status code
 	assert.Equal(t, http.StatusOK, resp.StatusCode, "Expected status code 200")
-
 }
-
-// func TestViewCart(t *testing.T) {
-// 	app := gofr.New()
-
-// 	// Set up a test server
-// 	ts := httptest.NewServer(app)
-// 	defer ts.Close()
-
-// 	// Perform a GET request
-// 	resp, err := http.Get(ts.URL + "/cart/view")
-// 	assert.NoError(t, err)
-// 	defer resp.Body.Close()
-
-// 	// Check if the request was successful
-// 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-// 	// Parse the response
-// 	var result []Cart
-// 	err = json.NewDecoder(resp.Body).Decode(&result)
-// 	assert.NoError(t, err)
-
-// 	// Check the response
-// 	assert.NotEmpty(t, result)
-// }
-
-// func TestDeleteProduct(t *testing.T) {
-// 	app := gofr.New()
-
-// 	// Set up a test server
-// 	ts := httptest.NewServer(app)
-// 	defer ts.Close()
-
-// 	// Test data
-// 	productID := 1
-
-// 	// Perform a DELETE request
-// 	req, err := http.NewRequest("DELETE", ts.URL+"/cart/delete/"+string(rune(productID)), nil)
-// 	assert.NoError(t, err)
-
-// 	client := http.Client{}
-// 	resp, err := client.Do(req)
-// 	assert.NoError(t, err)
-// 	defer resp.Body.Close()
-
-// 	// Check if the request was successful
-// 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-// 	// Parse the response
-// 	var result map[string]string
-// 	err = json.NewDecoder(resp.Body).Decode(&result)
-// 	assert.NoError(t, err)
-
-// 	// Check the response
-// 	assert.Equal(t, "Deleted Successfully", result["err"])
-// }
-
-// func TestUpdateCart(t *testing.T) {
-// 	app := gofr.New()
-
-// 	// Set up a test server
-// 	ts := httptest.NewServer(app)
-// 	defer ts.Close()
-
-// 	// Test data
-// 	productID := 1
-// 	payload := `{"name": "UpdatedProduct", "amount": 29.99}`
-
-// 	// Perform a PUT request
-// 	req, err := http.NewRequest("PUT", ts.URL+"/cart/update/"+string(rune(productID)), strings.NewReader(payload))
-// 	assert.NoError(t, err)
-// 	req.Header.Set("Content-Type", "application/json")
-
-// 	client := http.Client{}
-// 	resp, err := client.Do(req)
-// 	assert.NoError(t, err)
-// 	defer resp.Body.Close()
-
-// 	// Check if the request was successful
-// 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-// 	// Parse the response
-// 	var result map[string]string
-// 	err = json.NewDecoder(resp.Body).Decode(&result)
-// 	assert.NoError(t, err)
-
-// 	// Check the response
-// 	assert.Equal(t, "Updated Successfully", result["err"])
-// }
