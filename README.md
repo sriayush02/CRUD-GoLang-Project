@@ -29,6 +29,8 @@ This is a project for ZopSmart Technologies on GoLang using GoFr.
 > PUT /cart/update/{id}
 > Update the details of a specific item in the shopping cart.
 
+I have used docker to connect mysql and redis and used postman for testing API requests.
+
 
 
 ![uml](https://github.com/sriayush02/CRUD-GoLang-Project/assets/83555352/b7f5a98d-597f-4136-b524-48da2c6394fa)
