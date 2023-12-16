@@ -50,6 +50,9 @@ This is a project for ZopSmart Technologies on GoLang using GoFr.
 
 ![image](https://github.com/sriayush02/CRUD-GoLang-Project/assets/83555352/c46a3ded-406a-443c-8cd9-71b685c57d26)
 
+![image](https://github.com/sriayush02/CRUD-GoLang-Project/assets/83555352/9c708e08-aaa3-4468-bbd5-56429e8d3ff8)
+
+
 
 # How to RUN 
 
