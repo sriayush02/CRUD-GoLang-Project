@@ -9,6 +9,9 @@ This is a project for ZopSmart Technologies on GoLang using GoFr.
 
 
 
+
+
+
 # Features
 1.Create Cart Item:
 > POST /cart/add/{name}/{amount}
@@ -26,6 +29,11 @@ This is a project for ZopSmart Technologies on GoLang using GoFr.
 > PUT /cart/update/{id}
 > Update the details of a specific item in the shopping cart.
 
+
+
+![uml](https://github.com/sriayush02/CRUD-GoLang-Project/assets/83555352/b7f5a98d-597f-4136-b524-48da2c6394fa)
+
+
 # API Endpoints
 
 1. Create Cart Item:
@@ -39,6 +47,9 @@ This is a project for ZopSmart Technologies on GoLang using GoFr.
 
 4. Update Cart Item:
    PUT /cart/update/{id}
+
+![image](https://github.com/sriayush02/CRUD-GoLang-Project/assets/83555352/c46a3ded-406a-443c-8cd9-71b685c57d26)
+
 
 # How to RUN 
 
